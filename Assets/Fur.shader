@@ -9,7 +9,6 @@ Shader "Custom/Fur"
         _Shininess ("Shininess", Float) = 10
         _FurTex ("Fur Texture (RGBA)", 2D) = "white" {}
         _FurLength ("Fur Length", Range(0.0, 1.0)) = 1.0
-        _SelfShadowOffset ("Self Shadow Offset", Float) = 0.001
         _Gravity ("Gravity", Vector) = (0, -2.0, 0, 1.0)
     }
 
@@ -40,7 +39,6 @@ Shader "Custom/Fur"
             half4 _AlbedoColor;
             half4 _SpecularColor;
             float _Shininess;
-            float _SelfShadowOffset;
             half4 _Gravity;
 
             struct v2f 
