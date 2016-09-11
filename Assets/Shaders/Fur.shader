@@ -36,7 +36,7 @@ Shader "Custom/Fur"
             sampler2D _MainTex;
             sampler2D _FurTex;
             sampler2D _SpecularTex;
-            half4 _FurTex_ST;
+            half4 _MainTex_ST;
             float _FurLength;
             float _LayerIndex;
             half4 _AlbedoColor;
@@ -55,7 +55,7 @@ Shader "Custom/Fur"
 
             v2f vert(appdata_base v) 
             {
-                v2f o;
+                v2f o = (v2f)0;
                 half3 pos = v.vertex + v.normal * _FurLength * _LayerIndex;
                 // swaying effect
                 #if !FIXED
@@ -77,8 +77,8 @@ Shader "Custom/Fur"
                 #endif
                 // space transform
                 o.worldPos = mul(_Object2World, half4(pos, 1.0)).xyz;
-                o.pos = mul(UNITY_MATRIX_MVP, half4(pos.xyz, 1.0));
-                o.uv = TRANSFORM_TEX(v.texcoord, _FurTex);
+                o.pos = mul(UNITY_MATRIX_MVP, half4(pos, 1.0));
+                o.uv = TRANSFORM_TEX(v.texcoord, _MainTex);
                 o.normal = UnityObjectToWorldNormal(v.normal);
                 return o;
             }
