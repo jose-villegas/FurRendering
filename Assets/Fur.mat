@@ -112,7 +112,7 @@ Material:
       data:
         first:
           name: _FurLength
-        second: 0.25
+        second: 0.1
       data:
         first:
           name: _LayerIndex
