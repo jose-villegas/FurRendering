@@ -9,7 +9,9 @@ Shader "Custom/Fur"
         _Shininess ("Shininess", Float) = 10
         _FurTex ("Fur Texture (RGBA)", 2D) = "white" {}
         _FurLength ("Fur Length", Range(0.0, 1.0)) = 1.0
-        _Gravity ("Gravity", Vector) = (0, -2.0, 0, 1.0)
+        _Displacement ("Displacement", Vector) = (0, -2.0, 0, 1.0)
+        _FakeOcclusion ("Fake Occlusion", Range(0.0, 1.0)) = 0.3
+        [HideInInspector] _ZWrite ("__ZWrite", Float) = 1.0
     }
 
     SubShader 
@@ -17,7 +19,8 @@ Shader "Custom/Fur"
 
         Tags { "RenderType" = "Opaque" "Queue" = "Transparent" "LightMode" = "ForwardBase" }
         Blend SrcAlpha OneMinusSrcAlpha
-        ZWrite Off
+        Cull Off
+        ZWrite [_ZWrite]
 
         Pass 
         {
@@ -39,7 +42,8 @@ Shader "Custom/Fur"
             half4 _AlbedoColor;
             half4 _SpecularColor;
             float _Shininess;
-            half4 _Gravity;
+            float _FakeOcclusion;
+            half4 _Displacement;
 
             struct v2f 
             {
@@ -55,7 +59,7 @@ Shader "Custom/Fur"
                 half3 pos = v.vertex + v.normal * _FurLength * _LayerIndex;
                 // swaying effect
                 #if !FIXED
-	                half3 grav = mul(_Gravity, _Object2World).xyz;
+	                half3 grav = mul(_Displacement, _World2Object).xyz;
 	                // varying density functions
 	                #if LIN
 	                	float k = _LayerIndex;
@@ -107,8 +111,13 @@ Shader "Custom/Fur"
                     specular.rgb *= _LightColor0.rgb * pow(saturate(dot(H, i.normal)), _Shininess);
                 }
 
-                half4 furColor = tex2D(_FurTex, i.uv);
-                return half4(ambient.rgb + albedo.rgb + specular.rgb, furColor.a);
+                half3 furColor = ambient.rgb + albedo.rgb + specular.rgb;
+                half4 furData = tex2D(_FurTex, i.uv);
+                furData.a = (_LayerIndex == 0.0) ? 1.0 : furData.a;
+                // fake inter-strands occlusion
+                float shadow = lerp(_FakeOcclusion, 1.0, _LayerIndex);
+                // resulting pixel color
+                return half4(furColor * shadow, furData.a);
             }
             ENDCG
         }
