@@ -4,16 +4,17 @@ using System.Collections;
 [RequireComponent(typeof(Renderer))]
 public class FurLayers : MonoBehaviour 
 {
-	public int layerCount = 20;
+    [SerializeField]
+	private int layerCount = 20;
 
-	MeshFilter meshFilter;
-    Material[] materials;
-    Matrix4x4[] matrices;
+    private Material[] materials;
+    private Matrix4x4[] matrices;
+    private Mesh mesh = null;
 
-	void Start() 
+    private void Start() 
     {
-        Material furMaterial = GetComponent<Renderer>().material;
-		meshFilter = GetComponent<MeshFilter>();
+        Material furMaterial = GetComponent<Renderer>().sharedMaterial;
+        mesh = GetComponent<MeshFilter>().sharedMesh;
         materials = new Material[layerCount];
         matrices = new Matrix4x4[layerCount];
 
@@ -26,15 +27,14 @@ public class FurLayers : MonoBehaviour
             materials[i].renderQueue = 3000 + i;
             matrices[i] = Matrix4x4.identity;
             matrices[i].SetTRS(transform.position, transform.rotation, transform.localScale);
-
         }
 	}
 
-	void Update() 
+	private void Update() 
     {
 		for (int i = 0; i < layerCount; i++) 
         {
-            Graphics.DrawMesh(meshFilter.mesh, matrices[i], materials[i], 1);
+            Graphics.DrawMesh(mesh, matrices[i], materials[i], 1);
 		}
 	}
 }

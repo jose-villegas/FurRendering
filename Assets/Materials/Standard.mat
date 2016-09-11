@@ -6,12 +6,13 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Fur
-  m_Shader: {fileID: 4800000, guid: 0996d847ee6f743f2b344619d7ef31f9, type: 3}
-  m_ShaderKeywords: POW3
+  m_Name: Standard
+  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: _ALPHAPREMULTIPLY_ON
   m_LightmapFlags: 5
   m_CustomRenderQueue: 3000
-  stringTagMap: {}
+  stringTagMap:
+    RenderType: Transparent
   m_SavedProperties:
     serializedVersion: 2
     m_TexEnvs:
@@ -19,7 +20,7 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: fc9bf8b6fe8691448a35e56cda6f5b1b, type: 3}
+          m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -32,13 +33,6 @@ Material:
       data:
         first:
           name: _DetailNormalMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _SpecularTex
         second:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
@@ -85,13 +79,6 @@ Material:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _FurTex
-        second:
-          m_Texture: {fileID: 2800000, guid: 75405eb3c0099437ebe2699582a14393, type: 3}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
     m_Floats:
       data:
         first:
@@ -100,23 +87,11 @@ Material:
       data:
         first:
           name: _DstBlend
-        second: 0
+        second: 10
       data:
         first:
           name: _Cutoff
         second: 0.5
-      data:
-        first:
-          name: _Shininess
-        second: 5
-      data:
-        first:
-          name: _FurLength
-        second: 0.15
-      data:
-        first:
-          name: _LayerIndex
-        second: 0.95
       data:
         first:
           name: _Parallax
@@ -124,7 +99,7 @@ Material:
       data:
         first:
           name: _ZWrite
-        second: 1
+        second: 0
       data:
         first:
           name: _Glossiness
@@ -148,35 +123,11 @@ Material:
       data:
         first:
           name: _Mode
-        second: 0
+        second: 3
       data:
         first:
           name: _Metallic
         second: 0
-      data:
-        first:
-          name: _ShellLayer
-        second: 0
-      data:
-        first:
-          name: _FresnelPower
-        second: 5
-      data:
-        first:
-          name: _SelfShadowOffset
-        second: 0.01
-      data:
-        first:
-          name: _FakeOcclusion
-        second: 0.4
-      data:
-        first:
-          name: _Layers
-        second: 20
-      data:
-        first:
-          name: _EdgeFade
-        second: 0.15
     m_Colors:
       data:
         first:
@@ -186,19 +137,3 @@ Material:
         first:
           name: _Color
         second: {r: 1, g: 1, b: 1, a: 1}
-      data:
-        first:
-          name: _AlbedoColor
-        second: {r: 1, g: 1, b: 1, a: 1}
-      data:
-        first:
-          name: _SpecularColor
-        second: {r: 1, g: 1, b: 1, a: 1}
-      data:
-        first:
-          name: _Gravity
-        second: {r: 0.0005, g: 0, b: 0, a: 1}
-      data:
-        first:
-          name: _Displacement
-        second: {r: -0.01, g: 0.01, b: 0, a: 1}
