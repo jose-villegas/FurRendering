@@ -48,7 +48,7 @@ public class FurLayers : MonoBehaviour
         mat.CopyPropertiesFromMaterial(_furMaterial);
         mat.SetFloat("_LayerIndex", (float)i / (float)_layerCount);
         mat.SetFloat("_ZWrite", i == 0 ? 1.0f : 0.0f);
-        mat.renderQueue = 3000 + i; 
+        mat.renderQueue = 2900 + i; 
     }
 
     private void Update()

@@ -2,28 +2,27 @@
 {
 	Properties 
 	{
-		_MainTex ("Fur Texture (RGBA)", 2D) = "white" {}
+		_MainTex ("Albedo", 2D) = "white" {}
+		_AlbedoColor ("Albedo Color", Color) = (1,1,1,1)
+		_Glossiness ("Smoothness", Range(0, 1)) = 0.5
+		_Metallic ("Metallic", Range(0, 1)) = 0.0
+
+		_FurTex ("Fur Texture (RGBA)", 2D) = "white" {}
 		_FurLength ("Fur Length", Range(0.0, 1.0)) = 1.0
 		_Displacement ("Displacement", Vector) = (0.0, 0.0, 0, 1.0)
         _EdgeFade ("Edge Fade", Range(0.0, 1.0)) = 0.4
         _FakeOcclusion ("Fake Occlusion", Range(0.0, 1.0)) = 0.3
         _Cutoff ("Alpha Cutoff", Range(0.0, 1.0)) = 0.0
 
-		_AlbedoTex ("Albedo", 2D) = "white" {}
-		_AlbedoColor ("Albedo Color", Color) = (1,1,1,1)
-
-		_Glossiness ("Smoothness", Range(0, 1)) = 0.5
-		_Metallic ("Metallic", Range(0, 1)) = 0.0
-
 		[HideInInspector] _ZWrite ("__ZWrite", Float) = 1.0
 		[HideInInspector] _LayerIndex ("__LayerIndex", Float) = 0.0
 	}
 	SubShader 
 	{
-		Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
-		Cull Off
+		Tags { "RenderType" = "TransparentCutout" }
 		Blend SrcAlpha OneMinusSrcAlpha
 		ZWrite [_ZWrite]
+		Cull Off
 		LOD 200
 		
 		CGPROGRAM
@@ -35,12 +34,12 @@
 		#pragma target 3.0
 
 		sampler2D _MainTex;
-		sampler2D _AlbedoTex;
+		sampler2D _FurTex;
 
 		struct Input 
 		{
 			float2 uv_MainTex;
-			float2 uv_AlbedoTex;
+			float2 uv_FurTex;
 			float3 viewDir;
 		};
 
@@ -91,11 +90,11 @@
 			// alpha steps
 			half furData = 1.0f - (_LayerIndex * _LayerIndex);
 			furData += dot(IN.viewDir, o.Normal) - _EdgeFade;
-			furData *= _LayerIndex == 0.0 ? 1.0 : tex2D(_MainTex, IN.uv_MainTex).a;
+			furData *= _LayerIndex == 0.0 ? 1.0 : tex2D(_FurTex, IN.uv_FurTex).a;
             // fake inter-strands occlusion
             half fakeShadow = lerp(_FakeOcclusion, 1.0, _LayerIndex);
             // pass values
-			o.Albedo = _AlbedoColor * tex2D(_AlbedoTex, IN.uv_AlbedoTex) * fakeShadow;
+			o.Albedo = _AlbedoColor * tex2D(_MainTex, IN.uv_MainTex) * fakeShadow;
 			o.Metallic = _Metallic;
 			o.Smoothness = _Glossiness;
 			o.Alpha = furData;
@@ -103,6 +102,6 @@
 		ENDCG
 	}
 
-	FallBack "Diffuse"
+	FallBack "VertexLit"
 	CustomEditor "FurShaderEditor"
 }
