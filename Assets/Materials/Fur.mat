@@ -108,7 +108,7 @@ Material:
       data:
         first:
           name: _Shininess
-        second: 5
+        second: 10
       data:
         first:
           name: _FurLength
@@ -193,7 +193,7 @@ Material:
       data:
         first:
           name: _SpecularColor
-        second: {r: 1, g: 1, b: 1, a: 1}
+        second: {r: 1, g: 0.95618665, b: 0.60294116, a: 1}
       data:
         first:
           name: _Gravity
@@ -201,4 +201,4 @@ Material:
       data:
         first:
           name: _Displacement
-        second: {r: -0.01, g: 0.01, b: 0, a: 1}
+        second: {r: 0.05, g: 0, b: 0.05, a: 1}
