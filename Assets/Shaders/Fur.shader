@@ -52,12 +52,12 @@ Shader "Custom/Fur"
 
     SubShader 
     {
-        Tags { "Queue" = "Transparent" }
+        Tags { "RenderType" = "TransparentCutout" "Queue" = "Transparent" }
         LOD 200
 
         Pass 
         {
-            Tags { "RenderType" = "Opaque" "LightMode" = "ForwardBase" }
+            Tags { "LightMode" = "ForwardBase" }
             Cull Off
             ZWrite [_ZWrite]
             Blend SrcAlpha OneMinusSrcAlpha
@@ -143,9 +143,9 @@ Shader "Custom/Fur"
                 furData += dot(i.viewDir, i.normal) - _EdgeFade;
                 furData *= _LayerIndex == 0.0 ? 1.0 : tex2D(_FurTex, i.uv).a;
                 // fake inter-strands occlusion
-                float shadow = lerp(_FakeOcclusion, 1.0, _LayerIndex);
+                float fakeShadow = lerp(_FakeOcclusion, 1.0, _LayerIndex);
                 // resulting pixel color
-                furColor = furColor * shadow;
+                furColor = furColor * fakeShadow;
                 return half4(furColor, furData);
             }
             ENDCG

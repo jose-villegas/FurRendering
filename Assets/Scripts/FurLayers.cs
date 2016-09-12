@@ -5,36 +5,53 @@ using System.Collections;
 public class FurLayers : MonoBehaviour 
 {
     [SerializeField]
-	private int layerCount = 20;
+	private int _layerCount = 20;
 
-    private Material[] materials;
-    private Matrix4x4[] matrices;
-    private Mesh mesh = null;
+    private Material[] _materials;
+    private Matrix4x4 _matrix;
+    private Mesh _mesh = null;
+    private Material _furMaterial;
 
     private void Start() 
     {
-        Material furMaterial = GetComponent<Renderer>().sharedMaterial;
-        mesh = GetComponent<MeshFilter>().sharedMesh;
-        materials = new Material[layerCount];
-        matrices = new Matrix4x4[layerCount];
+        _furMaterial = GetComponent<Renderer>().sharedMaterial;
+        _mesh = GetComponent<MeshFilter>().sharedMesh;
+        _materials = new Material[_layerCount];
 
-        for(int i = 0; i < layerCount; i++)
+        for(int i = 0; i < _layerCount; i++)
         {
-            materials[i] = new Material(furMaterial);
-            materials[i].CopyPropertiesFromMaterial(furMaterial);
-            materials[i].SetFloat("_LayerIndex", (float)i / (float)layerCount);
-            materials[i].SetFloat("_ZWrite", i == 0 ? 1.0f : 0.0f);
-            materials[i].renderQueue = 3000 + i;
-            matrices[i] = Matrix4x4.identity;
-            matrices[i].SetTRS(transform.position, transform.rotation, transform.localScale);
+            _materials[i] = new Material(_furMaterial);
+            _materials[i].CopyPropertiesFromMaterial(_furMaterial);
+            _materials[i].SetFloat("_LayerIndex", (float)i / (float)_layerCount);
+            _materials[i].SetFloat("_ZWrite", i == 0 ? 1.0f : 0.0f);
+            _materials[i].renderQueue = 3000 + i;
         }
+
+        _matrix = Matrix4x4.identity;
+        _matrix.SetTRS(transform.position, transform.rotation, transform.localScale);
 	}
 
 	private void Update() 
     {
-		for (int i = 0; i < layerCount; i++) 
+        if(_layerCount != _materials.Length)
         {
-            Graphics.DrawMesh(mesh, matrices[i], materials[i], 1);
+            _materials = new Material[_layerCount];
+        }
+
+		for (int i = 0; i < _layerCount; i++) 
+        {
+            if(_materials[i] == null)
+            {
+                _materials[i] = new Material(_furMaterial);
+            }
+
+            // update material
+            _materials[i].CopyPropertiesFromMaterial(_furMaterial);
+            _materials[i].SetFloat("_LayerIndex", (float)i / (float)_layerCount);
+            _materials[i].SetFloat("_ZWrite", i == 0 ? 1.0f : 0.0f);
+            _materials[i].renderQueue = 3000 + i;
+            // draw shell mesh
+            Graphics.DrawMesh(_mesh, _matrix, _materials[i], 1);
 		}
 	}
 }

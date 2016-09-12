@@ -392,7 +392,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fe808d7975123b4da85809c43156889, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layerCount: 20
+  _layerCount: 20
 --- !u!23 &790142290
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -557,7 +557,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fe808d7975123b4da85809c43156889, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layerCount: 20
+  _layerCount: 20
 --- !u!23 &1825248969
 MeshRenderer:
   m_ObjectHideFlags: 0

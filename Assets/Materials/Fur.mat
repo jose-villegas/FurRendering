@@ -19,7 +19,7 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: fc9bf8b6fe8691448a35e56cda6f5b1b, type: 3}
+          m_Texture: {fileID: 2800000, guid: de0475ca9f3e9cb44b7ae0995aa091ee, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -112,7 +112,7 @@ Material:
       data:
         first:
           name: _FurLength
-        second: 0.15
+        second: 0.2
       data:
         first:
           name: _LayerIndex
@@ -176,7 +176,7 @@ Material:
       data:
         first:
           name: _EdgeFade
-        second: 0.15
+        second: 0.1
     m_Colors:
       data:
         first:
