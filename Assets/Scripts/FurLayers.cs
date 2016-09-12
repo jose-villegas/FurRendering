@@ -2,37 +2,28 @@
 using System.Collections;
 
 [RequireComponent(typeof(Renderer)), ExecuteInEditMode]
-public class FurLayers : MonoBehaviour 
+public class FurLayers : MonoBehaviour
 {
     [SerializeField, Range(0, 80)]
-	private int _layerCount = 20;
+    private int _layerCount = 20;
+    [SerializeField]
+    private GameObject[] _layers = new GameObject[0];
+    [SerializeField]
+    private Material[] _materials = new Material[0];
 
-    private GameObject[] _layers;
-    private Material[] _materials;
     private Mesh _mesh = null;
     private Material _furMaterial;
 
-    private void Start() 
+    private void Start()
     {
         _furMaterial = GetComponent<Renderer>().sharedMaterial;
         _mesh = GetComponent<MeshFilter>().sharedMesh;
-        // materials for each layer
-        _materials = new Material[_layerCount];
-        // create gameobject layers
-        _layers = new GameObject[_layerCount];
-
-        for(int i = 1; i < _layerCount; i++)
-        {
-            _materials[i] = CreateShellMaterial(i);
-            _layers[i] = CreateShellGameObject(i, _mesh, _materials[i]);
-        }
     }
 
     private GameObject CreateShellGameObject(int i, Mesh mesh, Material material)
     {
         // rendering components
         GameObject layer = new GameObject("_ShellLayer" + i, typeof(MeshFilter), typeof(MeshRenderer));
-        layer.hideFlags = HideFlags.HideInHierarchy;
         layer.transform.SetParent(transform);
         // reset respective to parent
         layer.transform.localRotation = Quaternion.identity;
@@ -60,23 +51,46 @@ public class FurLayers : MonoBehaviour
         mat.renderQueue = 3000 + i; 
     }
 
-	private void Update() 
+    private void Update()
     {
+        if (null == _layers)
+        {
+            _layers = new GameObject[_layerCount];
+        }
+        if (null == _materials)
+        {
+            _materials = new Material[_layerCount];
+        }
+
         if (_layerCount != _layers.Length)
         {
             for (int i = 0; i < _layers.Length; i++)
             {
-                DestroyImmediate(_layers[i]);
-                DestroyImmediate(_materials[i]);
+                if (null != _layers[i])
+                {
+                    DestroyImmediate(_layers[i]);
+                }
             }
 
-            // materials for each layer
-            _materials = new Material[_layerCount];
             // create gameobject layers
             _layers = new GameObject[_layerCount];
         }
 
-		for (int i = 0; i < _layerCount; i++) 
+        if (_layerCount != _materials.Length)
+        {
+            for (int i = 0; i < _materials.Length; i++)
+            {
+                if (null != _materials[i])
+                {
+                    DestroyImmediate(_materials[i]);
+                }
+            }
+
+            // materials for each layer
+            _materials = new Material[_layerCount];
+        }
+
+        for (int i = 0; i < _layerCount; i++)
         {
             if (null == _materials[i])
             {
@@ -90,6 +104,6 @@ public class FurLayers : MonoBehaviour
             {
                 _layers[i] = CreateShellGameObject(i, _mesh, _materials[i]);
             }
-		}
-	}
+        }
+    }
 }

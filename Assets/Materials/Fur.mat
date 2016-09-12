@@ -7,10 +7,10 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Fur
-  m_Shader: {fileID: 4800000, guid: 0996d847ee6f743f2b344619d7ef31f9, type: 3}
-  m_ShaderKeywords: POW3
+  m_Shader: {fileID: 4800000, guid: 1220e429d5035fc47bc6b57cb1d3cced, type: 3}
+  m_ShaderKeywords: FIXED
   m_LightmapFlags: 5
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: 2000
   stringTagMap: {}
   m_SavedProperties:
     serializedVersion: 2
@@ -19,7 +19,7 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: de0475ca9f3e9cb44b7ae0995aa091ee, type: 3}
+          m_Texture: {fileID: 2800000, guid: 75405eb3c0099437ebe2699582a14393, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -92,6 +92,13 @@ Material:
           m_Texture: {fileID: 2800000, guid: 75405eb3c0099437ebe2699582a14393, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _AlbedoTex
+        second:
+          m_Texture: {fileID: 2800000, guid: fc9bf8b6fe8691448a35e56cda6f5b1b, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
     m_Floats:
       data:
         first:
@@ -104,7 +111,7 @@ Material:
       data:
         first:
           name: _Cutoff
-        second: 0.5
+        second: 0
       data:
         first:
           name: _Shininess
@@ -116,7 +123,7 @@ Material:
       data:
         first:
           name: _LayerIndex
-        second: 0.95
+        second: 0
       data:
         first:
           name: _Parallax
@@ -128,7 +135,7 @@ Material:
       data:
         first:
           name: _Glossiness
-        second: 0.5
+        second: 0.1
       data:
         first:
           name: _BumpScale
@@ -152,7 +159,7 @@ Material:
       data:
         first:
           name: _Metallic
-        second: 0
+        second: 0.2
       data:
         first:
           name: _ShellLayer
@@ -201,4 +208,4 @@ Material:
       data:
         first:
           name: _Displacement
-        second: {r: 0.05, g: 0, b: 0.05, a: 1}
+        second: {r: 0, g: 0, b: 0, a: 0}
