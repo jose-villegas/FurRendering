@@ -1,4 +1,4 @@
-﻿Shader "Custom/Standard Fur" 
+﻿Shader "Custom/Standard Fur (Needs Script)" 
 {
 	Properties 
 	{
