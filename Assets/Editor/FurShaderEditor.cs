@@ -15,11 +15,12 @@ public class FurShaderEditor : ShaderGUI
 
     private DensityFunctions _option;
 
-    public override void OnGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
+    public override void OnGUI(MaterialEditor materialEditor,
+                               MaterialProperty[] properties)
     {
         Material targetMat = materialEditor.target as Material;
-
         EditorGUI.BeginChangeCheck();
+
         // option resets every time the spector isn't being renderer
         if (targetMat.IsKeywordEnabled("FIXED"))
         {
@@ -42,7 +43,8 @@ public class FurShaderEditor : ShaderGUI
             _option = DensityFunctions.Sine;
         }
 
-        _option = (DensityFunctions)EditorGUILayout.EnumPopup("Density Function", _option);
+        _option = (DensityFunctions)EditorGUILayout.EnumPopup("Density Function",
+                  _option);
 
         if (EditorGUI.EndChangeCheck())
         {
@@ -51,25 +53,28 @@ public class FurShaderEditor : ShaderGUI
             targetMat.DisableKeyword("POW2");
             targetMat.DisableKeyword("POW3");
             targetMat.DisableKeyword("SINE");
+
             // enable or disable the keyword based on enum
             switch (_option)
             {
                 case DensityFunctions.Fixed:
                     targetMat.EnableKeyword("FIXED");
                     break;
+
                 case DensityFunctions.Linear:
                     targetMat.EnableKeyword("LIN");
                     break;
+
                 case DensityFunctions.Pow2:
                     targetMat.EnableKeyword("POW2");
                     break;
+
                 case DensityFunctions.Pow3:
                     targetMat.EnableKeyword("POW3");
                     break;
+
                 case DensityFunctions.Sine:
                     targetMat.EnableKeyword("SINE");
-                    break;                   
-                default:
                     break;
             }
         }
