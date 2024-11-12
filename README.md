@@ -1,3 +1,5 @@
+Warning: This implementation is extremely old, there are probably much better ways to do this in newer Unity versions. Still worth for understanding shell texturing.
+
 # FurRendering
 Fur/grass rendering in Unity with Shell Texturing
 
