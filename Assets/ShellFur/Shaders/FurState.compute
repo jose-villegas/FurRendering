@@ -1,0 +1,22 @@
+// Keeps a smoothed world position per vertex. The fur shader bends each strand toward it,
+// so fur trails behind the skin when the mesh moves or animates.
+#pragma kernel UpdateState
+
+ByteAddressBuffer _FurPositions;
+RWStructuredBuffer<float4> _FurState;
+uint _FurPositionStride, _FurPositionOffset, _FurVertexCount;
+float4x4 _FurObjectToWorld;
+float _FurBlend;
+
+[numthreads(64, 1, 1)]
+void UpdateState(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= _FurVertexCount)
+        return;
+    float3 p = asfloat(_FurPositions.Load3(id.x * _FurPositionStride + _FurPositionOffset));
+    p = mul(_FurObjectToWorld, float4(p, 1)).xyz;
+    float4 s = _FurState[id.x];
+    s.xyz = s.w > 0 ? lerp(s.xyz, p, _FurBlend) : p;
+    s.w = 1;
+    _FurState[id.x] = s;
+}
