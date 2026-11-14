@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
+
 sampler2D _MainTex;
 sampler2D _FurTex;
 
@@ -22,7 +24,7 @@ half3 FurDisplacement(half3 position, half3 normal, float layer)
 
     // swaying effect
     #if !FIXED
-        half3 grav = mul(_Displacement, _World2Object).xyz;
+        half3 grav = mul(_Displacement, unity_WorldToObject).xyz;
         half k = 0;
         // varying density functions
         #if LIN
